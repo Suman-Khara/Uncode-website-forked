@@ -216,3 +216,53 @@ button:hover {
     transform: rotate(360deg);
   }
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .test-form {
+    padding: 15px;
+  }
+
+  .io-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-title {
+    font-size: 28px;
+  }
+
+  .logo-left,
+  .logo-right {
+    display: none; /* Hide images on mobile */
+  }
+
+  .test-container {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .problem-statement {
+    padding: 8px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
