@@ -113,12 +113,10 @@ const Test = () => {
     const tauntMessages = [
       "Copy kar raha tha...Soch raha hoga na ‘isko kaise pata chala?’ Beta, teri shakal se hi ‘Ctrl + C Ctrl + V coder’ vibes aa rahi hai! Uncode mein aise nahi chalega, algorithm pe kaam kar!",
       "Beta, tu toh code likhne ke naam pe hi darr gaya? Uncode mein aise nahi chalega, code likh!",
-      "Ajeeb banda hai tu, problem ka logic samajhne ka natak bhi karega ya seedha ‘print(expected_output)’ dalke chal padega? Genius bano, hardcoded coder nahi!",
       "Beta, tu toh ‘print’ ke bina kuch nahi karta! Uncode mein aise nahi chalega, code likh!",
       "Bhagwan teri copy-paste ki atma ko shanti de! Ab toh sudhar ja!",
       "Beta, tu toh ‘Ctrl + C Ctrl + V’ ke bina kuch nahi karta! Uncode mein aise nahi chalega, code likh!",
       "Ajeeb insaan hai tu... Copy-paste ka ashirwad lene aaya hai? Beta, yeh shastra tere liye nahi likha gaya! Apni soch se kuch naya kar!",
-      "Bro, Uncode jite jaabi mone korechis copy-paste diye? Bhalo bhalo! Pattern bojha nei, toh leaderboard er last e thakbi!",
       "Aree bhai, eta Uncode! Nijer brain lagabi na toh kikora jabe",
     ];
 
@@ -160,9 +158,21 @@ const Test = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setRunning(true);
+
+    // Create a promise that resolves after 1 second
+    const delay = new Promise((resolve) => setTimeout(resolve, 1000));
+
     try {
-      const response = await axios.post("/run", { problem, input });
-      setOutput(response.data.output);
+      // const response = await axios.post("/run", { problem, input });
+      // setOutput(response.data.output);
+
+       const response = await Promise.all([
+         axios.post("/run", { problem, input }),
+         delay,
+       ]);
+
+       // Set the output from the API response
+       setOutput(response[0].data.output);
     } catch {
       setOutput("");
     } finally {

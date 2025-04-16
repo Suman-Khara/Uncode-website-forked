@@ -4,14 +4,26 @@ const { spawn } = require("child_process");
 const path = require("path");
 const fs = require("fs");
 const { exec } = require("child_process");
+const { rateLimit } =require("express-rate-limit");
 
 const app = express();
-
+app.set("trust proxy", 1); 
 
 const corsOptions = {
   origin: "http://localhost:3000",
   methods: ["POST", "GET"],
 };
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  limit: 80, // Limit each IP to 80 requests per minute
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+});
+
+app.use(limiter); // Apply the rate limiting middleware to all requests
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
